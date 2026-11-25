@@ -1,77 +1,102 @@
 # Nova Assistant
 
-Nova is a personal desktop assistant for Windows. It combines conversation, voice control, notes, reminders, file browsing, activity history, desktop widgets, and an always-on-top AI overlay in one focused application.
+### A personal AI operating layer for your Windows desktop
 
-## Features
+Nova is a voice-first desktop assistant designed to help you move from intention to action. Ask naturally, and Nova can understand the request, plan the next step, use the right desktop tool, and report what happened.
 
-- Chat with Nova using text or voice
-- Groq LLM integration with tool calling
-- Speech-to-text and text-to-speech support
-- Create, edit, search, and manage notes
-- Create and manage reminders
-- Browse and search local files and folders
-- Live activity and execution audit stream
-- Desktop widgets and a floating AI overlay
-- Global push-to-talk shortcut: `Ctrl+Space`
-- Dark, rounded Windows desktop interface
+> **Do it now. Your future self will thank you.**
 
-## Requirements
+![Nova Assistant](novaassistant/assets/nova_icon.ico)
 
-- Windows 10 or later
-- Python 3.10 or later
-- A working microphone for voice features
-- API keys for the providers you want to use
+## What makes Nova different
 
-## Run from source
+Nova is more than a chat window. It is an AI workspace that connects conversation with useful desktop actions.
 
-Create and activate a virtual environment:
+- **Natural conversation** — talk or type in plain language
+- **AI tool calling** — Nova can choose and execute supported actions instead of only replying with text
+- **Voice pipeline** — microphone input, speech recognition, reasoning, action execution, and spoken response
+- **Live execution visibility** — follow listening, transcription, thinking, execution, and response states as they happen
+- **Personal memory spaces** — manage notes, reminders, conversations, and activity locally
+- **Desktop awareness** — browse files, open applications and links, and work with everyday desktop tasks
+- **Always-available overlay** — keep Nova above other Windows applications while you work
+- **Desktop widgets** — pin time, date, focus, notes, reminders, AI status, and activity widgets where you need them
 
-```powershell
-python -m venv .venv
-.\\.venv\\Scripts\\Activate.ps1
-pip install -r requirements.txt
+## The Nova AI flow
+
+```text
+Speak or type
+      ↓
+Understand the request
+      ↓
+Plan the response or tool action
+      ↓
+Execute and verify
+      ↓
+Explain the result
 ```
 
-Start Nova:
+Every operation is visible in the Activity audit stream, so you can see what Nova received, what it processed, which tool ran, and the final result.
 
-```powershell
-python main.py
-```
+## AI and voice capabilities
 
-You can also run `start.bat` from Windows Explorer.
+- Groq LLM integration for reasoning and tool calling
+- Groq Whisper or Deepgram Nova for speech-to-text
+- Deepgram Aura for text-to-speech
+- Push-to-talk with `Ctrl+Space`
+- Configurable voice and provider settings
+- Friendly user-facing errors with technical details kept in the activity log
 
-## Configuration and data
+## A focused desktop workspace
 
-Nova stores configuration and local application data in:
+Nova brings useful AI surfaces into one consistent Windows interface:
+
+- **Conversation** — chat with a floating composer and clear user/assistant messages
+- **Activity** — inspect the live execution audit stream
+- **Notes** — create, edit, search, and organize personal notes
+- **Reminders** — create, repeat, complete, snooze, and manage reminders
+- **Files** — browse drives, search folders, and open local files
+- **Widgets** — pin focused information to the desktop
+- **Overlay** — keep Nova available while using other applications
+
+## Privacy by design
+
+Nova stores your local data in:
 
 ```text
 %APPDATA%\\.nova-assistant\\
 ```
 
-This includes `config.json`, notes, reminders, conversation history, and activity logs. API keys are stored locally and are sent only to their configured provider.
+This includes configuration, notes, reminders, conversations, and activity history. API keys remain on your machine and are sent only to the provider you configure.
 
-Add or update provider keys from Nova's Settings page. No `.env` file is required.
+## Run Nova
+
+Requirements: Windows 10 or later and Python 3.10+.
+
+```powershell
+python -m venv .venv
+.\\.venv\\Scripts\\Activate.ps1
+pip install -r requirements.txt
+python main.py
+```
+
+You can also launch `start.bat` from Windows Explorer.
 
 ## Build the Windows executable
-
-Install the dependencies, then run:
 
 ```powershell
 .\\.venv\\Scripts\\Activate.ps1
 pyinstaller NovaAssistant.spec
 ```
 
-The executable is created at:
+The executable is generated at:
 
 ```text
 dist\\NovaAssistant.exe
 ```
 
-The application icon is stored at `novaassistant/assets/nova_icon.ico` and is included in the executable build.
+The Nova application icon is stored at `novaassistant/assets/nova_icon.ico` and is included in the build.
 
-## Tests
-
-Run the local checks with:
+## Test the application
 
 ```powershell
 python selftest.py
@@ -80,16 +105,14 @@ python selftest.py
 ## Project structure
 
 ```text
-main.py                         Application entry point
-NovaAssistant.spec              Windows executable build configuration
-requirements.txt                Python dependencies
-novaassistant/config.py         Local configuration and data paths
-novaassistant/core/             Assistant logic and data stores
+main.py                         Desktop application entry point
+NovaAssistant.spec              Windows executable configuration
+novaassistant/core/             AI orchestration and local data stores
 novaassistant/providers/        Groq and Deepgram integrations
 novaassistant/ui/               Desktop interface and pages
-novaassistant/assets/           Application assets and icon
+novaassistant/assets/           Nova icon and UI assets
 ```
 
-## Privacy
+## Status
 
-Nova is a local desktop application. Conversations, notes, reminders, and activity records are stored locally. Network requests are made only when using configured AI, speech, or voice providers.
+Nova is an actively developed personal desktop assistant focused on practical AI actions, voice interaction, and a calm, productive Windows workspace.
