@@ -1,6 +1,10 @@
 @echo off
 REM One-click launcher for Nova Assistant (Windows)
 cd /d "%~dp0"
+if exist "dist_rounded\NovaAssistant.exe" (
+    start "Nova Assistant" "dist_rounded\NovaAssistant.exe"
+    exit /b 0
+)
 if exist "dist\NovaAssistant.exe" (
     start "Nova Assistant" "dist\NovaAssistant.exe"
     exit /b 0

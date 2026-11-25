@@ -10,7 +10,7 @@ from __future__ import annotations
 from datetime import datetime
 
 from PySide6.QtCore import QEvent, QPoint, QRect, QSize, Qt, QTimer, Signal
-from PySide6.QtGui import QCursor, QFont, QPainter, QColor
+from PySide6.QtGui import QCursor, QFont, QPainter, QColor, QPainterPath, QRegion
 from PySide6.QtWidgets import (
     QApplication, QFrame, QHBoxLayout, QLabel, QLineEdit, QMainWindow, QPushButton,
     QStackedWidget, QSizePolicy, QVBoxLayout, QWidget,
@@ -428,6 +428,9 @@ class MainWindow(QMainWindow):
         self.ctx = app_ctx
         self.setWindowTitle("Nova — Personal Assistant")
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.Window)
+        # Frameless window: let the rounded root surface define the outer
+        # silhouette instead of exposing sharp black window corners.
+        self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setMinimumSize(QSize(940, 620))
         self.resize(1280, 820)
         self.setMouseTracking(True)
@@ -438,6 +441,11 @@ class MainWindow(QMainWindow):
         self._geo_timer.timeout.connect(self._persist_geometry)
 
         root = QWidget(objectName="RootWindow")
+        theme.set_style(
+            root,
+            f"QWidget#RootWindow {{ background: {theme.BLACK};"
+            f" border: 1px solid {theme.BORDER}; border-radius: 16px; }}",
+        )
         root.setMouseTracking(True)
         self.setCentralWidget(root)
         outer = QVBoxLayout(root)
@@ -622,6 +630,15 @@ class MainWindow(QMainWindow):
             self.sidebar.set_collapsed(self.width() <= 1040)
         self._geo_timer.start()
         super().resizeEvent(event)
+        # Stylesheet border-radius paints rounded content but does not clip a
+        # frameless top-level window. Apply a real mask so the outer four
+        # corners are transparent/rounded on the desktop and task switcher.
+        if not self.isMaximized():
+            path = QPainterPath()
+            path.addRoundedRect(self.rect().adjusted(0, 0, -1, -1), 16, 16)
+            self.setMask(QRegion(path.toFillPolygon().toPolygon()))
+        else:
+            self.clearMask()
 
     def moveEvent(self, event) -> None:
         self._geo_timer.start()
