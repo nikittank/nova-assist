@@ -491,6 +491,15 @@ class NovaApplication:
 
 
 def main() -> int:
+    # Give Windows a stable application identity so a source-launched build
+    # uses Nova's icon instead of the generic Python taskbar icon.
+    if os.name == "nt":
+        try:
+            import ctypes
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+                "nova-assistant.NovaAssistant")
+        except Exception:
+            pass
     QApplication.setApplicationName(APP_NAME)
     QApplication.setOrganizationName(ORG_NAME)
     QApplication.setHighDpiScaleFactorRoundingPolicy(
