@@ -4,9 +4,6 @@
 
 Nova is a voice-first desktop assistant designed to help you move from intention to action. Ask naturally, and Nova can understand the request, plan the next step, use the right desktop tool, and report what happened.
 
-> **Do it now. Your future self will thank you.**
-
-![Nova Assistant](novaassistant/assets/nova_icon.ico)
 
 ## What makes Nova different
 
