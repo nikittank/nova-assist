@@ -49,5 +49,5 @@ exe = EXE(
     runtime_tmpdir=None,
     console=False,          # windowed desktop app - no terminal
     disable_windowed_traceback=False,
-    icon=None,              # optional: drop icon.ico here and set icon="icon.ico"
+    icon="novaassistant/assets/nova_icon.ico",
 )
